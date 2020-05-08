@@ -82,7 +82,7 @@
                                         <div class="row">
                                             <div class="col-md-8 col-sm-12 col-xs-12">
                                                 <p>{{ item.description }}</p>
-                                                {% if item.media %}
+                                                {% if item.media.count %}
                                                     <div class="title-hd-sm">
                                                         <h4>Videos & Photos</h4>
                                                         <a href="{{ item.get_absolute_url }}#media"
@@ -109,13 +109,13 @@
                                                         {% endfor %}
                                                     </div>
                                                 {% endif %}
-                                                {% if item.characters %}
+                                                {% if item.characters.count %}
                                                     <div class="title-hd-sm">
                                                         <h4>Characters</h4>
                                                     </div>
                                                     <!-- movie cast -->
                                                     <div class="mvcast-item">
-                                                        {% for e in item.characters.all %}
+                                                        {% for e in item.characters.all|slice:'0:3' %}
                                                             <div class="cast-it">
                                                                 <div class="cast-left">
                                                                     <img src="{{ e.image.url }}" alt="" width="114" height="72">
@@ -134,18 +134,6 @@
                                                 <!-- movie user review -->
                                                 <div class="mv-user-review-item">
                                                     <h3>Best Marvel movie in my opinion</h3>
-                                                    <div class="no-star">
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                    </div>
                                                     <p class="time">
                                                         17 December 2016 by <a href="#"> hawaiipierson</a>
                                                     </p>
