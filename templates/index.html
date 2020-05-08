@@ -102,10 +102,10 @@
                     <a href="#"><i class="ion-social-youtube"></i></a>
                 </div>
                 <div class="slick-multiItemSlider">
-                    {% for item in object_list %}
+                    {% for item in latest_list %}
                         <div class="movie-item">
                             <div class="mv-img">
-                                <a href="#"><img src="{{ item.image.url }}" alt="" width="285" height="437"></a>
+                                <a href="{{ item.get_absolute_url }}"><img src="{{ item.image.url }}" alt="" width="285" height="437"></a>
                             </div>
                             <div class="title-in">
                                 <div class="cate">
@@ -117,7 +117,7 @@
                                     <span class="green"><a href="#">{{ item.language }}</a></span>
                                     {% endif %}
                                 </div>
-                                <h6><a href="#">Interstellar</a></h6>
+                                <h6><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h6>
                                 <p><i class="ion-android-star"></i><span>7.4</span> /10</p>
                             </div>
                         </div>
