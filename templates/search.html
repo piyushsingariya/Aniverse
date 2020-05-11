@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load thumbnail %}
 {% block content %}
     <div class="hero common-hero">
         <div class="container">
@@ -18,7 +19,7 @@
     <div class="page-single movie_list">
         <div class="container">
             <div class="row ipad-width2">
-                <div class="col-md-8 col-sm-12 col-xs-12">
+                <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="topbar-filter">
                         <p>Found <span>{{ results.count }} movies</span> in total</p>
                         <label>Sort by:</label>
@@ -35,13 +36,16 @@
                     </div>
                     {% for item in results %}
                         <div class="movie-item-style-2">
-                            <img src="{{ item.image.url }}" alt="">
+                            {% thumbnail item.image "274x420" padding=True as im %}
+                                <img src="{{ im.url }}" alt="" width="{{ im.width }}"
+                                     height="{{ im.height }}">
+                            {% endthumbnail %}
                             <div class="mv-item-infor">
                                 <h6><a href="{{ item.get_absolute_url }}">
                                     {{ item.title }}{% if item.title_english %} /{{ item.title_english }}{% endif %}
                                     <span>({{ item.year_released }})</span></a></h6>
                                 <p class="rate"><i class="ion-android-star"></i><span>{{ item.rating }}</span> /10</p>
-                                <p class="describe">{{ item.description|slice:"0:150" }}....</p>
+                                <p class="describe">{{ item.description|slice:"0:250" }}....</p>
                                 <p class="run-time"> Total Episodes: {{ item.insights.total_episodes }} |<span>Available In: {{ item.language }}</span>|<span>Release: 1 May 2015</span>
                                 </p>
                                 <p>Writer: <a href="#">{{ item.insights.writers }}</a></p>
@@ -67,10 +71,10 @@
                         </div>
                     {% endfor %}
                 </div>
-                <div class="col-md-4 col-sm-12 col-xs-12">
-                    <div class="sidebar">
-                    </div>
-                </div>
+                {#                <div class="col-md-4 col-sm-12 col-xs-12">#}
+                {#                    <div class="sidebar">#}
+                {#                    </div>#}
+                {#                </div>#}
             </div>
         </div>
     </div>

@@ -86,12 +86,18 @@ class MediaAttachments(models.Model):
     def __str__(self):
         return self.image.name
 
+    class Meta:
+        verbose_name_plural = "Media Attachments"
+
 
 class AnimeCategory(models.Model):
     category = models.CharField(max_length=30)
 
     def __str__(self):
         return self.category
+
+    class Meta:
+        verbose_name_plural = "Anime Categories"
 
 
 class InsightDetails(models.Model):
@@ -104,6 +110,9 @@ class InsightDetails(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name_plural = "Insight Details"
 
 
 class Characters(models.Model):
@@ -125,7 +134,9 @@ class Item(models.Model):
     background_image = models.ImageField(blank=True, null=True)
     description = models.TextField(default=DEFAULT_DESCRIPTION)
     rating = models.FloatField(default=7.0)
+    votes = models.IntegerField(default=1000)
     ongoing = models.BooleanField(default=True)
+    editors_pick = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     genres = MultiSelectField(choices=GENRES_CHOICES)
@@ -141,6 +152,46 @@ class Item(models.Model):
 
     class Meta:
         verbose_name = 'Anime'
+
+    def get_absolute_url(self):
+        return reverse("core:anime", kwargs={
+            'pk': self.id
+        })
+
+    def media_qs(self):
+        return self.media.order_by('-added_date')[:4]
+
+    def get_image_count(self):
+        return self.media.filter(is_video=False).count()
+
+    def get_video_count(self):
+        return self.media.filter(is_video=True).count()
+
+
+class MovieItem(models.Model):
+    title = models.CharField(max_length=100)
+    title_english = models.CharField(max_length=100, blank=True, null=True)
+    image = models.ImageField(default=None)
+    background_image = models.ImageField(blank=True, null=True)
+    description = models.TextField(default=DEFAULT_DESCRIPTION)
+    rating = models.FloatField(default=7.0)
+    votes = models.IntegerField(default=1000)
+    editors_pick = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    genres = MultiSelectField(choices=GENRES_CHOICES)
+    sub_genres = MultiSelectField(choices=SUB_GENRES_CHOICES)
+    year_released = models.IntegerField(choices=year_choices(), default=current_year() - 4)
+    media = models.ManyToManyField(MediaAttachments, blank=True)
+    insights = models.ForeignKey(InsightDetails, blank=True, on_delete=models.CASCADE)
+    characters = models.ManyToManyField(Characters, blank=True)
+    language = models.CharField(choices=AUDIO_CHOICES, max_length=30, default='Subbed')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Anime Movies'
 
     def get_absolute_url(self):
         return reverse("core:anime", kwargs={

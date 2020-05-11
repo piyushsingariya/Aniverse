@@ -53,11 +53,15 @@ class IndexView(View):
     def get(self, *args, **kwargs):
         latest_updated = latest_updated_list()
         ongoing_list = Item.objects.filter(ongoing=True).order_by("-updated")
-        rated_list = Item.objects.order_by("rating")
+        rated_list = Item.objects.filter(ongoing=True).order_by("-rating")
+        voted_list = Item.objects.filter(ongoing=True).order_by("-votes")
+        editor_list = Item.objects.filter(ongoing=True, editors_pick=True)
         context = {
             'latest_list': latest_updated,
             'ongoing_list': ongoing_list,
             'rated_list': rated_list,
+            'voted_list': voted_list,
+            'editor_list': editor_list
         }
         return render(self.request, "index.html", context)
 
