@@ -67,19 +67,19 @@
                             </div>
                         </div>
                     {% endfor %}
-                    <div class="topbar-filter">
-                        <label>Movies per page:</label>
-                        <select>
-                            <option value="range">5 Movies</option>
-                            <option value="saab">10 Movies</option>
-                        </select>
-                        <div class="pagination2">
-                            <span>Page 1 of 2:</span>
-                            <a class="active" href="#">1</a>
-                            <a href="#">2</a>
-                            <a href="#"><i class="ion-arrow-right-b"></i></a>
+                    {% if is_paginated %}
+                        <div class="topbar-filter">
+                            <div class="pagination2 center">
+                                {% if page_obj.has_previous %}
+                                    <a href="?page={{ page_obj.previous_page_number }}"><i class="ion-arrow-left-b"></i></a>
+                                {% endif %}
+                                <a class="active"><span>Page {{ page_obj.number }}</span></a>
+                                {% if page_obj.has_next %}
+                                    <a href="?page={{ page_obj.next_page_number }}"><i class="ion-arrow-right-b"></i></a>
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
+                    {% endif %}
                 </div>
                 <div class="col-md-4 col-sm-12 col-xs-12">
                     <div class="sidebar">

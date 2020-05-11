@@ -30,9 +30,10 @@ class Search(ListView):
 class AnimeListingView(ListView):
     model = Item
     template_name = "listing.html"
-    try:
-        paginated_by
-    except:
+    paginate_by = 1
+
+    def get_paginate_by(self, queryset):
+        return self.request.GET.get('paginate_by', self.paginate_by)
 
 
 class IndexView(View):
