@@ -1,9 +1,39 @@
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView, View
 from .models import Item
+from django.db.models import Q
+
 
 def latest_updated_list():
     return Item.objects.order_by("-updated")[:13]
+
+
+class Search(ListView):
+    def get(self, *args, **kwargs):
+        # url/?q="_____"
+        # will be our search query
+        queryset = Item.objects.all()
+        query = self.request.GET.get('search_item')
+        if query:
+            queryset = queryset.filter(
+                Q(title__icontains=query) |
+                Q(title_english__icontains=query) |
+                Q(description__icontains=query)
+            ).distinct()
+        context = {
+            'results': queryset,
+            'query': query
+        }
+        return render(self.request, 'search.html', context)
+
+
+class AnimeListingView(ListView):
+    model = Item
+    template_name = "listing.html"
+    try:
+        paginated_by
+    except:
+
 
 class IndexView(View):
     def get(self, *args, **kwargs):
@@ -12,6 +42,7 @@ class IndexView(View):
             'latest_list': latest_updated
         }
         return render(self.request, "index.html", context)
+
 
 class ItemDetailView(DetailView):
     model = Item

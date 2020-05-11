@@ -21,34 +21,7 @@
                         <a href="#page-top"></a>
                     </li>
                     <li><a href="/">Home</a></li>
-                    <li class="dropdown first">
-                        <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown">
-                            Home <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </a>
-                        <ul class="dropdown-menu level1">
-                            <li><a href="index-2.html">Home 01</a></li>
-                            <li><a href="homev2.html">Home 02</a></li>
-                            <li><a href="homev3.html">Home 03</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown first">
-                        <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-                            movies<i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </a>
-                        <ul class="dropdown-menu level1">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Movie grid<i
-                                        class="ion-ios-arrow-forward"></i></a>
-                                <ul class="dropdown-menu level2">
-                                    <li><a href="moviegrid.html">Movie grid</a></li>
-                                    <li><a href="moviegridfw.html">movie grid full width</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="movielist.html">Movie list</a></li>
-                            <li><a href="moviesingle.html">Movie single</a></li>
-                            <li class="it-last"><a href="seriessingle.html">Series single</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="/anime-list/all">All Anime</a></li>
                     <li class="dropdown first">
                         <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
                             celebrities <i class="fa fa-angle-down" aria-hidden="true"></i>
@@ -102,13 +75,13 @@
         </nav>
 
         <!-- top search form -->
-        <div class="top-search">
+        <form action="{% url 'core:search' %}" class="top-search">
             <select>
                 <option value="united">TV show</option>
                 <option value="saab">Others</option>
             </select>
-            <input type="text" placeholder="Search for a movie, TV Show or celebrity that you are looking for">
-        </div>
+            <input type="text" name="search_item" placeholder="Search for a movie, TV Show or celebrity that you are looking for">
+        </form>
     </div>
 </header>
 <!-- END | Header -->

@@ -1,5 +1,6 @@
 from django.db import models
 from django.shortcuts import reverse
+from multiselectfield import MultiSelectField
 import datetime
 
 AUDIO_CHOICES = (
@@ -47,6 +48,7 @@ SUB_GENRES_CHOICES = (
     ('Seinen', 'Seinen'),
     ('Shoujo', 'Shoujo'),
     ('Shoujo-ai', 'Shoujo-ai'),
+    ('Shounen', 'Shounen'),
     ('Shounen-ai', 'Shounen-ai'),
     ('Space', 'Space'),
     ('Sports', 'Sports'),
@@ -56,6 +58,13 @@ SUB_GENRES_CHOICES = (
     ('Yuri', 'Yuri'),
     ('Yaoi', 'Yaoi')
 )
+
+DEFAULT_DESCRIPTION = """Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum."""
 
 
 def year_choices():
@@ -87,12 +96,14 @@ class AnimeCategory(models.Model):
 class InsightDetails(models.Model):
     title = models.CharField(max_length=100)
     production_house = models.CharField(max_length=50)
-    director = models.CharField(max_length=50)
     writers = models.CharField(max_length=50)
+    director = models.CharField(max_length=50, blank=True, null=True)
     total_episodes = models.IntegerField(default=25)
-    season_number = models.IntegerField(default=0)
+    season_number = models.IntegerField(default=1)
+
     def __str__(self):
         return self.title
+
 
 class Characters(models.Model):
     name = models.CharField(max_length=50)
@@ -110,14 +121,16 @@ class Item(models.Model):
     title = models.CharField(max_length=100)
     title_english = models.CharField(max_length=100, blank=True, null=True)
     image = models.ImageField(default=None)
-    description = models.TextField(blank=True, null=True)
+    background_image = models.ImageField(blank=True, null=True)
+    description = models.TextField(default=DEFAULT_DESCRIPTION)
     rating = models.FloatField(default=7.0)
     ongoing = models.BooleanField(default=True)
     updated = models.DateTimeField(auto_now=True)
-    genres = models.ManyToManyField(choices=GENRES_CHOICES)
-    sub_genres = models.ManyToManyField(choices=SUB_GENRES_CHOICES)
+    genres = MultiSelectField(choices=GENRES_CHOICES)
+    sub_genres = MultiSelectField(choices=SUB_GENRES_CHOICES)
     year_released = models.IntegerField(choices=year_choices(), default=current_year() - 4)
     media = models.ManyToManyField(MediaAttachments, blank=True)
+    insights = models.ForeignKey(InsightDetails, blank=True, on_delete=models.CASCADE)
     characters = models.ManyToManyField(Characters, blank=True)
     language = models.CharField(choices=AUDIO_CHOICES, max_length=30, default='Subbed')
 
