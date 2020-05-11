@@ -21,7 +21,7 @@
             <div class="row ipad-width2">
                 <div class="col-md-8 col-sm-12 col-xs-12">
                     <div class="topbar-filter">
-                        <p>Found <span>{{ item_list.count }} movies</span> in total</p>
+                        <p>Found <span>{{ object_list.count }} movies</span> in total</p>
                         <label>Sort by:</label>
                         <select>
                             <option value="popularity">Popularity Descending</option>
@@ -34,7 +34,7 @@
                         <a href="listing.html" class="list"><i class="ion-ios-list-outline active"></i></a>
                         <a href="moviegrid.html" class="grid"><i class="ion-grid"></i></a>
                     </div>
-                    {% for item in item_list %}
+                    {% for item in queryset %}
                         <div class="movie-item-style-2">
                             <img src="{{ item.image.url }}" alt="">
                             <div class="mv-item-infor">
@@ -67,19 +67,17 @@
                             </div>
                         </div>
                     {% endfor %}
-                    {% if is_paginated %}
                         <div class="topbar-filter">
                             <div class="pagination2 center">
-                                {% if page_obj.has_previous %}
-                                    <a href="?page={{ page_obj.previous_page_number }}"><i class="ion-arrow-left-b"></i></a>
+                                {% if queryset.has_previous %}
+                                    <a href="?page={{ queryset.previous_page_number }}"><i class="ion-arrow-left-b"></i></a>
                                 {% endif %}
-                                <a class="active"><span>Page {{ page_obj.number }}</span></a>
-                                {% if page_obj.has_next %}
-                                    <a href="?page={{ page_obj.next_page_number }}"><i class="ion-arrow-right-b"></i></a>
+                                <a class="active"><span>Page {{ queryset.number }}</span></a>
+                                {% if queryset.has_next %}
+                                    <a href="?page={{ queryset.next_page_number }}"><i class="ion-arrow-right-b"></i></a>
                                 {% endif %}
                             </div>
                         </div>
-                    {% endif %}
                 </div>
                 <div class="col-md-4 col-sm-12 col-xs-12">
                     <div class="sidebar">

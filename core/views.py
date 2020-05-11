@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import DetailView, ListView, View
 from .models import Item
 from django.db.models import Q
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def latest_updated_list():
     return Item.objects.order_by("-updated")[:13]
@@ -27,13 +27,25 @@ class Search(ListView):
         return render(self.request, 'search.html', context)
 
 
-class AnimeListingView(ListView):
-    model = Item
-    template_name = "listing.html"
-    paginate_by = 1
+class AnimeListingView(View):
+    def get(self, *args, **kwargs):
+        queryset = Item.objects.all()
 
-    def get_paginate_by(self, queryset):
-        return self.request.GET.get('paginate_by', self.paginate_by)
+        paginator = Paginator(queryset, 10)
+        page_requested_var = 'page'
+        page = self.request.GET.get(page_requested_var)
+        try:
+            paginated_queryset = paginator.page(page)
+        except PageNotAnInteger:
+            paginated_queryset = paginator.page(1)
+        except EmptyPage:
+            paginated_queryset = paginator.page(paginator.num_pages)
+        context = {
+            'object_list': queryset,
+            'page_number': page_requested_var,
+            'queryset': paginated_queryset
+        }
+        return render(self.request, 'listing.html', context)
 
 
 class IndexView(View):
