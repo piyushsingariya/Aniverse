@@ -67,17 +67,17 @@
                             </div>
                         </div>
                     {% endfor %}
-                        <div class="topbar-filter">
-                            <div class="pagination2 center">
-                                {% if queryset.has_previous %}
-                                    <a href="?page={{ queryset.previous_page_number }}"><i class="ion-arrow-left-b"></i></a>
-                                {% endif %}
-                                <a class="active"><span>Page {{ queryset.number }}</span></a>
-                                {% if queryset.has_next %}
-                                    <a href="?page={{ queryset.next_page_number }}"><i class="ion-arrow-right-b"></i></a>
-                                {% endif %}
-                            </div>
+                    <div class="topbar-filter">
+                        <div class="pagination2">
+                            {% if queryset.has_previous %}
+                                <a href="?page={{ queryset.previous_page_number }}"><i class="ion-arrow-left-b"></i></a>
+                            {% endif %}
+                            <a class="active"><span>Page {{ queryset.number }}</span></a>
+                            {% if queryset.has_next %}
+                                <a href="?page={{ queryset.next_page_number }}"><i class="ion-arrow-right-b"></i></a>
+                            {% endif %}
                         </div>
+                    </div>
                 </div>
                 <div class="col-md-4 col-sm-12 col-xs-12">
                     <div class="sidebar">

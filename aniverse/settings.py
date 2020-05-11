@@ -13,9 +13,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
     'core',
-    'multiselectfield'
+    'multiselectfield',
+    'sorl.thumbnail'
 ]
 
 MIDDLEWARE = [
@@ -64,6 +66,7 @@ DATABASES = {
         "NAME": os.path.join(BASE_DIR, 'db.sqlite3')
     }
 }
+THUMBNAIL_DEBUG = True
 
 if ENVIRONMENT == 'production':
     DEBUG = False

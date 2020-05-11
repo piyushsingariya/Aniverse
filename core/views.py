@@ -4,8 +4,9 @@ from .models import Item
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+
 def latest_updated_list():
-    return Item.objects.order_by("-updated")[:13]
+    return Item.objects.order_by("-created")[:13]
 
 
 class Search(ListView):
@@ -51,8 +52,12 @@ class AnimeListingView(View):
 class IndexView(View):
     def get(self, *args, **kwargs):
         latest_updated = latest_updated_list()
+        ongoing_list = Item.objects.filter(ongoing=True).order_by("-updated")
+        rated_list = Item.objects.order_by("rating")
         context = {
-            'latest_list': latest_updated
+            'latest_list': latest_updated,
+            'ongoing_list': ongoing_list,
+            'rated_list': rated_list,
         }
         return render(self.request, "index.html", context)
 
