@@ -191,7 +191,7 @@ class MovieItem(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = 'Anime Movies'
+        verbose_name_plural = 'Movies'
 
     def get_absolute_url(self):
         return reverse("core:anime", kwargs={

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Item, AnimeCategory, MediaAttachments, Characters, InsightDetails
+from .models import Item, AnimeCategory, MediaAttachments, Characters, InsightDetails, MovieItem
 
 
 def make_them_completed(modeladmin, request, queryset):
@@ -46,6 +46,7 @@ class ItemAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Item, ItemAdmin)
+admin.site.register(MovieItem)
 admin.site.register(AnimeCategory)
 admin.site.register(MediaAttachments)
 admin.site.register(Characters)

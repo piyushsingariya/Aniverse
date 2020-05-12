@@ -20,16 +20,14 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li><a href="/">Home</a></li>
+                    <li><a href="{% url 'core:index' %}">Home</a></li>
                     <li class="dropdown first">
                         <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
                             All Anime List <i class="fa fa-angle-down" aria-hidden="true"></i>
                         </a>
                         <ul class="dropdown-menu level1">
-                            <li><a href="/anime-list/all">List View</a></li>
-                            <li><a href="celebritygrid02.html">celebrity grid 02 </a></li>
-                            <li><a href="celebritylist.html">celebrity list</a></li>
-                            <li class="it-last"><a href="celebritysingle.html">celebrity single</a></li>
+                            <li><a href="{% url 'core:anime-listing' %}">List View</a></li>
+                            <li class="it-last"><a href="{% url 'core:anime-griding' %}">Grid View</a></li>
                         </ul>
                     </li>
                     <li class="dropdown first">

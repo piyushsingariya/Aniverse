@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% block content %}
+    <div class="hero common-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="hero-ct">
+                        <h1>Anime Griding - All</h1>
+                        <ul class="breadcumb">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><span class="ion-ios-arrow-right"></span> Anime Griding</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-single">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="topbar-filter fw">
+                        <p>Found <span>{{ object_list.count }} movies</span> in total</p>
+                        <label>Sort by:</label>
+                        <select>
+                            <option value="popularity">Popularity Descending</option>
+                            <option value="popularity">Popularity Ascending</option>
+                            <option value="rating">Rating Descending</option>
+                            <option value="rating">Rating Ascending</option>
+                            <option value="date">Release date Descending</option>
+                            <option value="date">Release date Ascending</option>
+                        </select>
+                        <a href="{% url 'core:anime-listing' %}" class="list"><i class="ion-ios-list-outline "></i></a>
+                        <a href="{% url 'core:anime-griding' %}" class="grid"><i class="ion-grid active"></i></a>
+                    </div>
+                    <div class="flex-wrap-movielist mv-grid-fw">
+                        {% for item in queryset %}
+                            <div class="movie-item-style-2 movie-item-style-1">
+                                {% thumbnail item.image "170x261" padding=True as im %}
+                                    <img src="{{ im.url }}" alt="" width="{{ im.width }}"
+                                         height="{{ im.height }}">
+                                {% endthumbnail %}
+                                <div class="hvr-inner">
+                                    <a href="{{ item.get_absolute_url }}"> Read more <i
+                                            class="ion-android-arrow-dropright"></i>
+                                    </a>
+                                </div>
+                                <div class="mv-item-infor">
+                                    <div class="cate">
+                                        {% if item.language == 'Subbed' %}
+                                            <span class="orange"><a
+                                                    href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
+                                        {% elif item.language == 'Dual Audio' %}
+                                            <span class="blue"><a
+                                                    href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
+                                        {% else %}
+                                            <span class="green"><a
+                                                    href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
+                                        {% endif %}
+                                    </div>
+                                    <h6><a href="{{ item.get_absolute_url }}">{{ item.title }} </a>
+                                    </h6>
+                                    <p class="rate"><i class="ion-android-star"></i><span>{{ item.rating }}</span> /10
+                                    </p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="topbar-filter">
+                        <div class="pagination2">
+                            {% if queryset.has_previous %}
+                                <a href="?page={{ queryset.previous_page_number }}"><i class="ion-arrow-left-b"></i></a>
+                            {% endif %}
+                            <a class="active"><span>Page {{ queryset.number }}</span></a>
+                            {% if queryset.has_next %}
+                            <a href="?page={{ queryset.next_page_number }}">{{ queryset.next_page_number }}</a>
+                            {% endif %}
+                            {% if queryset.has_next %}
+                                <a href="?page={{ queryset.next_page_number }}"><i class="ion-arrow-right-b"></i></a>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

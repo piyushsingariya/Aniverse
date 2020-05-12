@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView, View
-from .models import Item
+from .models import Item, MovieItem
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -49,6 +49,27 @@ class AnimeListingView(View):
         return render(self.request, 'listing.html', context)
 
 
+class AnimeGridingView(View):
+    def get(self, *args, **kwargs):
+        queryset = Item.objects.all()
+
+        paginator = Paginator(queryset, 30)
+        page_requested_var = 'page'
+        page = self.request.GET.get(page_requested_var)
+        try:
+            paginated_queryset = paginator.page(page)
+        except PageNotAnInteger:
+            paginated_queryset = paginator.page(1)
+        except EmptyPage:
+            paginated_queryset = paginator.page(paginator.num_pages)
+        context = {
+            'object_list': queryset,
+            'page_number': page_requested_var,
+            'queryset': paginated_queryset
+        }
+        return render(self.request, 'griding.html', context)
+
+
 class IndexView(View):
     def get(self, *args, **kwargs):
         latest_updated = latest_updated_list()
@@ -68,4 +89,9 @@ class IndexView(View):
 
 class ItemDetailView(DetailView):
     model = Item
+    template_name = 'moviesingle.html'
+
+
+class MovieDetailView(DetailView):
+    model = MovieItem
     template_name = 'moviesingle.html'
