@@ -180,7 +180,6 @@ class MovieItem(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     genres = MultiSelectField(choices=GENRES_CHOICES)
-    sub_genres = MultiSelectField(choices=SUB_GENRES_CHOICES)
     year_released = models.IntegerField(choices=year_choices(), default=current_year() - 4)
     media = models.ManyToManyField(MediaAttachments, blank=True)
     insights = models.ForeignKey(InsightDetails, blank=True, on_delete=models.CASCADE)

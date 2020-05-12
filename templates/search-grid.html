@@ -7,10 +7,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="hero-ct">
-                        <h1>Movie Listing - All</h1>
+                        <h1> Search - {{ query }}</h1>
                         <ul class="breadcumb">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><span class="ion-ios-arrow-right"></span> Movie Listing</li>
+                            <li class="active"><a href="/">Home</a></li>
+                            <li><span class="ion-ios-arrow-right"></span><a href="#">Search</a></li>
                         </ul>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="topbar-filter fw">
-                        <p>Found <span>{{ object_list.count }} movies</span> in total</p>
+                        <p>Found <span>{{ results.count }} Items</span> in total</p>
                         <label>Sort by:</label>
                         <select>
                             <option value="popularity">Popularity Descending</option>
@@ -32,9 +32,11 @@
                             <option value="date">Release date Descending</option>
                             <option value="date">Release date Ascending</option>
                         </select>
-                        </div>
+                        <a href="{% url 'core:anime-listing' %}" class="list"><i class="ion-ios-list-outline "></i></a>
+                        <a href="{% url 'core:anime-griding' %}" class="grid"><i class="ion-grid active"></i></a>
+                    </div>
                     <div class="flex-wrap-movielist mv-grid-fw">
-                        {% for item in queryset %}
+                        {% for item in results %}
                             <div class="movie-item-style-2 movie-item-style-1">
                                 {% thumbnail item.image "170x261" padding=True as im %}
                                     <img src="{{ im.url }}" alt="" width="{{ im.width }}"

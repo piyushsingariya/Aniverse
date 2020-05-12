@@ -28,11 +28,14 @@
                                         <span class="orange"><a
                                                 href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
                                     {% elif item.language == 'Dual Audio' %}
-                                        <span class="blue"><a href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
+                                        <span class="yell"><a href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
                                     {% else %}
                                         <span class="green"><a
                                                 href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
                                     {% endif %}
+                                {% if item.editors_pick %}
+                                        <span class="blue"><a href="{{ item.get_absolute_url }}">Editor's Pick</a></span>
+                                {% endif %}
                                 </div>
                                 <h6><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h6>
                                 <p><i class="ion-android-star"></i><span>{{ item.rating }}</span> /10</p>
@@ -76,18 +79,20 @@
                                                                 class="ion-android-arrow-dropright"></i> </a>
                                                     </div>
                                                     <div class="title-in">
-                                                        <div class="cate">
-                                                            {% if item.language == 'Subbed' %}
-                                                                <span class="orange"><a
-                                                                        href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
-                                                            {% elif item.language == 'Dual Audio' %}
-                                                                <span class="blue"><a
-                                                                        href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
-                                                            {% else %}
-                                                                <span class="green"><a
-                                                                        href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
-                                                            {% endif %}
-                                                        </div>
+                                <div class="cate">
+                                    {% if item.language == 'Subbed' %}
+                                        <span class="orange"><a
+                                                href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
+                                    {% elif item.language == 'Dual Audio' %}
+                                        <span class="yell"><a href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
+                                    {% else %}
+                                        <span class="green"><a
+                                                href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
+                                    {% endif %}
+                                {% if item.editors_pick %}
+                                        <span class="blue"><a href="{{ item.get_absolute_url }}">Editor's Pick</a></span>
+                                {% endif %}
+                                </div>
                                                         <h6><a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
                                                         </h6>
                                                         <p>
@@ -117,18 +122,20 @@
                                                                 class="ion-android-arrow-dropright"></i> </a>
                                                     </div>
                                                     <div class="title-in">
-                                                        <div class="cate">
-                                                            {% if item.language == 'Subbed' %}
-                                                                <span class="orange"><a
-                                                                        href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
-                                                            {% elif item.language == 'Dual Audio' %}
-                                                                <span class="blue"><a
-                                                                        href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
-                                                            {% else %}
-                                                                <span class="green"><a
-                                                                        href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
-                                                            {% endif %}
-                                                        </div>
+                                <div class="cate">
+                                    {% if item.language == 'Subbed' %}
+                                        <span class="orange"><a
+                                                href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
+                                    {% elif item.language == 'Dual Audio' %}
+                                        <span class="yell"><a href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
+                                    {% else %}
+                                        <span class="green"><a
+                                                href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
+                                    {% endif %}
+                                {% if item.editors_pick %}
+                                        <span class="blue"><a href="{{ item.get_absolute_url }}">Editor's Pick</a></span>
+                                {% endif %}
+                                </div>
                                                         <h6><a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
                                                         </h6>
                                                         <p>
@@ -158,18 +165,20 @@
                                                                 class="ion-android-arrow-dropright"></i> </a>
                                                     </div>
                                                     <div class="title-in">
-                                                        <div class="cate">
-                                                            {% if item.language == 'Subbed' %}
-                                                                <span class="orange"><a
-                                                                        href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
-                                                            {% elif item.language == 'Dual Audio' %}
-                                                                <span class="blue"><a
-                                                                        href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
-                                                            {% else %}
-                                                                <span class="green"><a
-                                                                        href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
-                                                            {% endif %}
-                                                        </div>
+                                <div class="cate">
+                                    {% if item.language == 'Subbed' %}
+                                        <span class="orange"><a
+                                                href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
+                                    {% elif item.language == 'Dual Audio' %}
+                                        <span class="yell"><a href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
+                                    {% else %}
+                                        <span class="green"><a
+                                                href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
+                                    {% endif %}
+                                {% if item.editors_pick %}
+                                        <span class="blue"><a href="{{ item.get_absolute_url }}">Editor's Pick</a></span>
+                                {% endif %}
+                                </div>
                                                         <h6><a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
                                                         </h6>
                                                         <p>
@@ -199,18 +208,20 @@
                                                                 class="ion-android-arrow-dropright"></i> </a>
                                                     </div>
                                                     <div class="title-in">
-                                                        <div class="cate">
-                                                            {% if item.language == 'Subbed' %}
-                                                                <span class="orange"><a
-                                                                        href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
-                                                            {% elif item.language == 'Dual Audio' %}
-                                                                <span class="blue"><a
-                                                                        href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
-                                                            {% else %}
-                                                                <span class="green"><a
-                                                                        href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
-                                                            {% endif %}
-                                                        </div>
+                                <div class="cate">
+                                    {% if item.language == 'Subbed' %}
+                                        <span class="orange"><a
+                                                href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
+                                    {% elif item.language == 'Dual Audio' %}
+                                        <span class="yell"><a href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
+                                    {% else %}
+                                        <span class="green"><a
+                                                href="{{ item.get_absolute_url }}">{{ item.language }}</a></span>
+                                    {% endif %}
+                                {% if item.editors_pick %}
+                                        <span class="blue"><a href="{{ item.get_absolute_url }}">Editor's Pick</a></span>
+                                {% endif %}
+                                </div>
                                                         <h6><a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
                                                         </h6>
                                                         <p>

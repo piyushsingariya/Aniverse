@@ -3,7 +3,7 @@ from django.views.generic import DetailView, ListView, View
 from .models import Item, MovieItem
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from itertools import chain
 
 def latest_updated_list():
     return Item.objects.order_by("-created")[:13]
@@ -14,6 +14,7 @@ class Search(ListView):
         # url/?q="_____"
         # will be our search query
         queryset = Item.objects.all()
+        movieset = MovieItem.objects.all()
         query = self.request.GET.get('search_item')
         if query:
             queryset = queryset.filter(
@@ -21,11 +22,18 @@ class Search(ListView):
                 Q(title_english__icontains=query) |
                 Q(description__icontains=query)
             ).distinct()
+        if query:
+            movieset = movieset.filter(
+                Q(title__icontains=query) |
+                Q(title_english__icontains=query) |
+                Q(description__icontains=query)
+            ).distinct()
+        result_list = list(chain(queryset, movieset))
         context = {
-            'results': queryset,
+            'results': result_list,
             'query': query
         }
-        return render(self.request, 'search.html', context)
+        return render(self.request, 'search-grid.html', context)
 
 
 class AnimeListingView(View):
@@ -68,6 +76,27 @@ class AnimeGridingView(View):
             'queryset': paginated_queryset
         }
         return render(self.request, 'griding.html', context)
+
+
+class MovieGridingView(View):
+    def get(self, *args, **kwargs):
+        queryset = MovieItem.objects.all()
+
+        paginator = Paginator(queryset, 30)
+        page_requested_var = 'page'
+        page = self.request.GET.get(page_requested_var)
+        try:
+            paginated_queryset = paginator.page(page)
+        except PageNotAnInteger:
+            paginated_queryset = paginator.page(1)
+        except EmptyPage:
+            paginated_queryset = paginator.page(paginator.num_pages)
+        context = {
+            'object_list': queryset,
+            'page_number': page_requested_var,
+            'queryset': paginated_queryset
+        }
+        return render(self.request, 'movielisting-grid.html', context)
 
 
 class IndexView(View):

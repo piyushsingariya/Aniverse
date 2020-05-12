@@ -1,5 +1,11 @@
 from django.urls import path
-from .views import IndexView, ItemDetailView, AnimeListingView, Search, AnimeGridingView, MovieDetailView
+from .views import (IndexView,
+                    ItemDetailView,
+                    AnimeListingView,
+                    Search,
+                    AnimeGridingView,
+                    MovieDetailView,
+                    MovieGridingView)
 
 app_name = 'core'
 urlpatterns = [
@@ -8,5 +14,6 @@ urlpatterns = [
     path('movie/<pk>/', MovieDetailView.as_view(), name="movie"),
     path('anime_all/list/', AnimeListingView.as_view(), name="anime-listing"),
     path('anime_all/grid/', AnimeGridingView.as_view(), name="anime-griding"),
+    path('movie_all/grid/', MovieGridingView.as_view(), name="movie-griding"),
     path('search/anime/', Search.as_view(), name="search"),
 ]

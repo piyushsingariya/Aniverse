@@ -45,8 +45,25 @@ class ItemAdmin(admin.ModelAdmin):
                duplicate_event]
 
 
+class MovieItemAdmin(admin.ModelAdmin):
+    list_display = ['title',
+                    'rating',
+                    'editors_pick',
+                    'created',
+                    'updated',
+                    'year_released',
+                    'language']
+    search_fields = ['title',
+                     'title_english',
+                     ]
+
+    actions = [editors_pick,
+               false_editors_pick,
+               ]
+
+
 admin.site.register(Item, ItemAdmin)
-admin.site.register(MovieItem)
+admin.site.register(MovieItem, MovieItemAdmin)
 admin.site.register(AnimeCategory)
 admin.site.register(MediaAttachments)
 admin.site.register(Characters)
