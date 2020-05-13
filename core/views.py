@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView, View
-from .models import Item, MovieItem
+from .models import Item, MovieItem, VideoItems
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from itertools import chain
+
 
 def latest_updated_list():
     return Item.objects.order_by("-created")[:13]
@@ -106,12 +107,20 @@ class IndexView(View):
         rated_list = Item.objects.filter(ongoing=True).order_by("-rating")
         voted_list = Item.objects.filter(ongoing=True).order_by("-votes")
         editor_list = Item.objects.filter(ongoing=True, editors_pick=True)
+
+        rated_movie_list = MovieItem.objects.order_by("-rating")
+        latest_movie_list = MovieItem.objects.order_by("-created")
+
+        videos = VideoItems.objects.filter(publish=True).order_by("-created_at")
         context = {
             'latest_list': latest_updated,
             'ongoing_list': ongoing_list,
             'rated_list': rated_list,
             'voted_list': voted_list,
-            'editor_list': editor_list
+            'editor_list': editor_list,
+            'latest_movie_list': latest_movie_list,
+            'rated_movie_list': rated_movie_list,
+            'videos': videos,
         }
         return render(self.request, "index.html", context)
 

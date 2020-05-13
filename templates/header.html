@@ -1,3 +1,5 @@
+{% load static %}
+{% load thumbnail %}
 <!-- BEGIN | Header -->
 <header class="ht-header">
     <div class="container">
@@ -12,7 +14,7 @@
                         <span></span>
                     </div>
                 </div>
-                <a href="index-2.html"><img class="logo" src="images/logo1.png" alt="" width="119" height="58"></a>
+                <a href="{% url 'core:index' %}"><img class="logo" src="media/uploads/sample2.jpg" alt="" width="119" height="58"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
@@ -64,10 +66,6 @@
 
         <!-- top search form -->
         <form action="{% url 'core:search' %}" class="top-search">
-            <select>
-                <option value="united">TV show</option>
-                <option value="saab">Others</option>
-            </select>
             <input type="text" name="search_item" placeholder="Search for a movie, TV Show or celebrity that you are looking for">
         </form>
     </div>

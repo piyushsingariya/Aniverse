@@ -205,3 +205,20 @@ class MovieItem(models.Model):
 
     def get_video_count(self):
         return self.media.filter(is_video=True).count()
+
+
+class VideoItems(models.Model):
+    title = models.CharField(max_length=100)
+    image = models.ImageField()
+    url = models.URLField()
+    runtime = models.CharField(max_length=9)
+    publish = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = "Videos, AMV, Trailers"
+
+    def __str__(self):
+        return self.title
