@@ -10,12 +10,6 @@ AUDIO_CHOICES = (
     ('Dubbed', 'Dubbed'),
 )
 
-REQUEST_CHOICES = (
-    ('Anime', 'Anime'),
-    ('Movie', 'Movie'),
-    ('Others', 'Others'),
-)
-
 GENRES_CHOICES = (
     ('Action', 'Action'),
     ('Adventure', 'Adventure'),
@@ -232,9 +226,10 @@ class VideoItems(models.Model):
 
 class Request(models.Model):
     name = models.CharField(max_length=100)
-    email = models.EmailField()
+    email_address = models.EmailField()
     title = models.CharField(max_length=100)
-    choice = models.CharField(choices=REQUEST_CHOICES, max_length=40)
+    season = models.CharField(max_length=100, blank=True, null=True)
+    choice = models.CharField(max_length=40)
     request_accepted = models.BooleanField(default=False)
     message = models.TextField(blank=True, null=True)
 

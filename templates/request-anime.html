@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load thumbnail %}
+{% load crispy_forms_tags %}
 {% block content %}
     <div class="slider movie-items">
         <div class="container">
@@ -13,47 +14,48 @@
                         <h2>Request Anime/Movies</h2>
                     </div>
                     <div class="form-style-1 user-pro" action="#">
-                        <form action="#" class="user">
+                        <form action="." method="post" class="user">
+                            {% csrf_token %}
                             <h4>Fill up the below details</h4>
                             <div class="row">
                                 <div class="col-md-6 form-it">
-                                    <label>Username</label>
-                                    <input type="text" placeholder="edwardkennedy">
+                                    <label>Name*</label>
+                                    {{ form.name }}
+                                    {#                                    <input type="text" placeholder="edwardkennedy">#}
                                 </div>
                                 <div class="col-md-6 form-it">
-                                    <label>Email Address</label>
-                                    <input type="text" placeholder="edward@kennedy.com">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 form-it">
-                                    <label>First Name</label>
-                                    <input type="text" placeholder="Edward ">
-                                </div>
-                                <div class="col-md-6 form-it">
-                                    <label>Last Name</label>
-                                    <input type="text" placeholder="Kennedy">
+                                    <label>Email Address*</label>
+                                    {{ form.email_address }}
+                                    {#                                    <input type="text" placeholder="edward@kennedy.com">#}
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 form-it">
-                                    <label>Country</label>
-                                    <select>
-                                        <option value="united">United States</option>
-                                        <option value="saab">Others</option>
-                                    </select>
+                                    <label>Anime/Movie Title*</label>
+                                    {{ form.title }}
+                                    {#                                    <input type="text" placeholder="Edward ">#}
                                 </div>
                                 <div class="col-md-6 form-it">
-                                    <label>State</label>
-                                    <select>
-                                        <option value="united">New York</option>
-                                        <option value="saab">Others</option>
-                                    </select>
+                                    <label>Season (if any)</label>
+                                    {{ form.season }}
+                                    {#                                    <input type="text" placeholder="Kennedy">#}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 form-it">
+                                    <label>Select Anime or Movie</label>
+                                    {{ form.choice }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9 form-it">
+                                    <label>Any Message for us/ Details about your Request</label>
+                                    {{ form.message}}
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <input class="submit" type="submit" value="save">
+                                    <button class="redbtn" type="submit">Request Now</button>
                                 </div>
                             </div>
                         </form>

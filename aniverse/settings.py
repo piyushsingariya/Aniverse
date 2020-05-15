@@ -17,7 +17,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'multiselectfield',
-    'sorl.thumbnail'
+    'sorl.thumbnail',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [

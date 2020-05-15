@@ -5,7 +5,8 @@ from .models import (Item,
                      Characters,
                      InsightDetails,
                      MovieItem,
-                     VideoItems)
+                     VideoItems,
+                     Request)
 
 
 def make_them_completed(modeladmin, request, queryset):
@@ -68,6 +69,16 @@ class MovieItemAdmin(admin.ModelAdmin):
                ]
 
 
+class RequestAdmin(admin.ModelAdmin):
+    list_display = ['title',
+                    'name',
+                    'email_address',
+                    'season',
+                    'choice',
+                    'request_accepted',
+                    ]
+
+
 admin.site.register(Item, ItemAdmin)
 admin.site.register(MovieItem, MovieItemAdmin)
 admin.site.register(AnimeCategory)
@@ -75,3 +86,4 @@ admin.site.register(MediaAttachments)
 admin.site.register(Characters)
 admin.site.register(InsightDetails)
 admin.site.register(VideoItems)
+admin.site.register(Request, RequestAdmin)

@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import DetailView, ListView, View
-from .models import Item, MovieItem, VideoItems
+from .models import Item, MovieItem, VideoItems, Request
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from itertools import chain
+from .forms import RequestForm
+from django.contrib import messages
 
 
 def latest_updated_list():
@@ -137,3 +139,36 @@ class ItemDetailView(DetailView):
 class MovieDetailView(DetailView):
     model = MovieItem
     template_name = 'moviesingle.html'
+
+
+class RequestView(View):
+    def get(self, *args, **kwargs):
+        form = RequestForm()
+        context = {
+            'form': form
+        }
+        return render(self.request, 'request-anime.html', context)
+
+    def post(self, *args, **kwargs):
+        form = RequestForm(self.request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get('name')
+            email_address = form.cleaned_data.get('email_address')
+            title = form.cleaned_data.get('title')
+            season = form.cleaned_data.get('season')
+            choice = form.cleaned_data.get('choice')
+            message = form.cleaned_data.get('message')
+            try:
+                request = Request()
+                request.name = name
+                request.email_address = email_address
+                request.title = title
+                request.season = season
+                request.choice = choice
+                request.message = message
+                request.save()
+                messages.success(self.request, "We have successfully received your request. Thank You!")
+                return redirect("core:index")
+            except:
+                messages.info(self.request, "Something went wrong! Please retry after some time.")
+                return redirect("core:request-us")

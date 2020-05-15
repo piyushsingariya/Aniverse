@@ -6,7 +6,7 @@ from .views import (IndexView,
                     AnimeGridingView,
                     MovieDetailView,
                     MovieGridingView,
-                    testing)
+                    RequestView)
 
 app_name = 'core'
 urlpatterns = [
@@ -17,6 +17,6 @@ urlpatterns = [
     path('anime_all/grid/', AnimeGridingView.as_view(), name="anime-griding"),
     path('movie_all/grid/', MovieGridingView.as_view(), name="movie-griding"),
     path('search/anime/', Search.as_view(), name="search"),
-    path('testing/', testing, name="testing"),
+    path('request-us/', RequestView.as_view(), name="request-us"),
 
 ]
