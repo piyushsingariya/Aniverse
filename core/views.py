@@ -7,7 +7,11 @@ from itertools import chain
 
 
 def latest_updated_list():
-    return Item.objects.order_by("-created")[:13]
+    return Item.objects.order_by("-created")[:20]
+
+
+def testing(request):
+    return render(request, 'request-anime.html')
 
 
 class Search(ListView):
