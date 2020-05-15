@@ -12,7 +12,7 @@ class RequestForm(forms.Form):
         'class': 'col-md-6 form-it',
         'placeholder': 'Naruto Uzumaki'
     }))
-    email_address = forms.CharField(widget=forms.TextInput(attrs={
+    email_address = forms.EmailField(widget=forms.TextInput(attrs={
         'class': 'col-md-6 form-it',
         'placeholder': 'yourname@example.com'
     }))

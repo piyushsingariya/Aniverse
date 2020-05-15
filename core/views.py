@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, ListView, View
 from .models import Item, MovieItem, VideoItems, Request
 from django.db.models import Q
@@ -169,6 +169,9 @@ class RequestView(View):
                 request.save()
                 messages.success(self.request, "We have successfully received your request. Thank You!")
                 return redirect("core:index")
-            except:
+            except :
                 messages.info(self.request, "Something went wrong! Please retry after some time.")
                 return redirect("core:request-us")
+        else:
+            messages.info(self.request, "Something went wrong! Please retry after some time.")
+            return redirect("core:request-us")
