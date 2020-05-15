@@ -1,7 +1,7 @@
 {% load static %}
 {% load thumbnail %}
 <!-- BEGIN | Header -->
-<header class="ht-header">
+<header class="ht-header" style="margin-bottom: ">
     <div class="container">
         <nav class="navbar navbar-default navbar-custom">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -14,7 +14,8 @@
                         <span></span>
                     </div>
                 </div>
-                <a href="{% url 'core:index' %}"><img class="logo" src="media/uploads/sample2.jpg" alt="" width="119" height="58"></a>
+                <a href="{% url 'core:index' %}"><img class="logo" src="/media/uploads/sample2.jpg" alt="" width="119"
+                                                      height="58"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
@@ -64,10 +65,25 @@
             <!-- /.navbar-collapse -->
         </nav>
 
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
         <!-- top search form -->
-        <form action="{% url 'core:search' %}" class="top-search">
-            <input type="text" name="search_item" placeholder="Search for a movie, TV Show or celebrity that you are looking for">
+        <form action="{% url 'core:search' %}" class="top-search m-md-2">
+            <input type="text" name="search_item"
+                   placeholder="Search for a movie, TV Show or celebrity that you are looking for">
         </form>
+
     </div>
 </header>
 <!-- END | Header -->
