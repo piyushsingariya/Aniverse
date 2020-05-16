@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load thumbnail %}
 {% block content %}
-    {% if item.background_image %}
-        <div class="hero mv-single-hero" style="background: url({{ item.background_image.url }})">
+    {% if movieitem.background_image %}
+        {% thumbnail movieitem.background_image "1354x600" crop="center" as im %}
+            <div class="hero mv-single-hero" style="background: url({{ im.url }})">
+        {% endthumbnail %}
     {% else %}
         <div class="hero mv-single-hero">
     {% endif %}
@@ -23,7 +26,7 @@
         <div class="row ipad-width2">
             <div class="col-md-4 col-sm-12 col-xs-12">
                 <div class="movie-img sticky-sb">
-                    <img src="{{ item.image.url }}" alt="">
+                    <img src="{{ movieitem.image.url }}" alt="">
                     <div class="movie-btn">
                         <div class="btn-transform transform-vertical red">
                             <div><a href="#" class="item item-1 redbtn"> <i class="ion-android-download"></i> 1080p
@@ -53,20 +56,20 @@
             </div>
             <div class="col-md-8 col-sm-12 col-xs-12">
                 <div class="movie-single-ct main-content">
-                    <h1 class="bd-hd">{{ item.title }} {% if item.title_english %}/
-                        {{ item.title_english }}{% endif %} <span>{{ item.year_released }}</span></h1>
+                    <h1 class="bd-hd">{{ movieitem.title }} {% if movieitem.title_english %}/
+                        {{ movieitem.title_english }}{% endif %} <span>{{ movieitem.year_released }}</span></h1>
                     <div class="social-btn">
                         <a href="#" class="parent-btn"><i class="ion-heart"></i> Vote to recommend</a>
                     </div>
                     <div class="movie-rate">
                         <div class="rate">
                             <i class="ion-android-star"></i>
-                            <p><span>{{ item.rating }}</span> /10<br>
+                            <p><span>{{ movieitem.rating }}</span> /10<br>
                             </p>
                         </div>
                         <div class="rate-star">
                             <p>Rate This Movie: </p>
-                            {% for i in item.rating|floatformat:"-1" %}
+                            {% for i in movieitem.rating|floatformat:"-1" %}
                                 <i class="ion-ios-star"></i>
                             {% endfor %}
                             <i class="ion-ios-star-outline"></i>
@@ -85,17 +88,17 @@
                                 <div id="overview" class="tab active">
                                     <div class="row">
                                         <div class="col-md-8 col-sm-12 col-xs-12">
-                                            <p>{{ item.description }}</p>
-                                            {% if item.media.count %}
+                                            <p>{{ movieitem.description }}</p>
+                                            {% if movieitem.media.count %}
                                                 <div class="title-hd-sm">
                                                     <h4>Videos & Photos</h4>
-                                                    <a href="{{ item.get_absolute_url }}#media"
-                                                       class="time">All {{ item.get_video_count }} Videos
-                                                        & {{ item.get_image_count }} Photos <i
+                                                    <a href="{{ movieitem.get_absolute_url }}#media"
+                                                       class="time">All {{ movieitem.get_video_count }} Videos
+                                                        & {{ movieitem.get_image_count }} Photos <i
                                                                 class="ion-ios-arrow-right"></i></a>
                                                 </div>
                                                 <div class="mvsingle-item ov-item">
-                                                    {% for e in item.media_qs %}
+                                                    {% for e in movieitem.media_qs %}
                                                         {% if not e.is_video %}
                                                             <a class="img-lightbox" data-fancybox-group="gallery"
                                                                href="{{ e.image.url }}"><img
@@ -113,13 +116,13 @@
                                                     {% endfor %}
                                                 </div>
                                             {% endif %}
-                                            {% if item.characters.count %}
+                                            {% if movieitem.characters.count %}
                                                 <div class="title-hd-sm">
                                                     <h4>Characters</h4>
                                                 </div>
                                                 <!-- movie cast -->
                                                 <div class="mvcast-item">
-                                                    {% for e in item.characters.all|slice:'0:3' %}
+                                                    {% for e in movieitem.characters.all|slice:'0:3' %}
                                                         <div class="cast-it">
                                                             <div class="cast-left">
                                                                 <img src="{{ e.image.url }}" alt="" width="114"
@@ -156,19 +159,19 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-xs-12 col-sm-12">
-                                            {% if item.insights.director %}
+                                            {% if movieitem.insights.director %}
                                                 <div class="sb-it">
                                                     <h6>Director: </h6>
-                                                    <p><a href="#">{{ item.insights.director }}</a></p>
+                                                    <p><a href="#">{{ movieitem.insights.director }}</a></p>
                                                 </div>
                                             {% endif %}
                                             <div class="sb-it">
                                                 <h6>Writers: </h6>
-                                                <p><a href="#">{{ item.insights.writers }}</a></p>
+                                                <p><a href="#">{{ movieitem.insights.writers }}</a></p>
                                             </div>
                                             <div class="sb-it">
                                                 <h6>Genres:</h6>
-                                                <p>{% for g in item.genres %}
+                                                <p>{% for g in movieitem.genres %}
                                                     {% if forloop.last %}
                                                         <a href="">{{ g }}</a>
                                                     {% else %}
@@ -179,7 +182,7 @@
                                             </div>
                                             <div class="sb-it">
                                                 <h6>Release Year:</h6>
-                                                <p>{{ item.get_year_released_display }}</p>
+                                                <p>{{ movieitem.get_year_released_display }}</p>
                                             </div>
                                             <div class="sb-it">
                                                 <h6>Total Episodes</h6>
@@ -188,7 +191,7 @@
                                             <div class="sb-it">
                                                 <h6>Sub Genres:</h6>
                                                 <p class="tags">
-                                                    {% for s in item.sub_genres %}
+                                                    {% for s in movieitem.sub_genres %}
                                                         <span class="time"><a href="#">{{ s }}</a></span>
                                                     {% endfor %}
                                                 </p>

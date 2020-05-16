@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, ListView, View
-from .models import Item, MovieItem, VideoItems, Request
+from .models import Item, MovieItem, VideoItems, Request, Character
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from itertools import chain
@@ -22,6 +22,7 @@ class Search(ListView):
         # will be our search query
         queryset = Item.objects.all()
         movieset = MovieItem.objects.all()
+        characterset = Character.objects.all()
         query = self.request.GET.get('search_item')
         if query:
             queryset = queryset.filter(
@@ -29,13 +30,16 @@ class Search(ListView):
                 Q(title_english__icontains=query) |
                 Q(description__icontains=query)
             ).distinct()
-        if query:
             movieset = movieset.filter(
                 Q(title__icontains=query) |
                 Q(title_english__icontains=query) |
                 Q(description__icontains=query)
             ).distinct()
-        result_list = list(chain(queryset, movieset))
+            characterset = characterset.filter(
+                Q(name__icontains=query) |
+                Q(description__icontains=query)
+            ).distinct()
+        result_list = list(chain(queryset, movieset, characterset))
         context = {
             'results': result_list,
             'query': query
@@ -133,12 +137,17 @@ class IndexView(View):
 
 class ItemDetailView(DetailView):
     model = Item
-    template_name = 'moviesingle.html'
+    template_name = 'anime-single.html'
 
 
 class MovieDetailView(DetailView):
     model = MovieItem
-    template_name = 'moviesingle.html'
+    template_name = 'movie-single.html'
+
+
+class CharacterDetailView(DetailView):
+    model = Character
+    template_name = 'character-details.html'
 
 
 class RequestView(View):
@@ -169,7 +178,7 @@ class RequestView(View):
                 request.save()
                 messages.success(self.request, "We have successfully received your request. Thank You!")
                 return redirect("core:index")
-            except :
+            except:
                 messages.info(self.request, "Something went wrong! Please retry after some time.")
                 return redirect("core:request-us")
         else:

@@ -2,7 +2,8 @@ from django.db import models
 from django.shortcuts import reverse
 from multiselectfield import MultiSelectField
 import datetime
-from sorl.thumbnail import ImageField, get_thumbnail
+from ckeditor_uploader.fields import RichTextUploadingField
+from itertools import chain
 
 AUDIO_CHOICES = (
     ('Dual Audio', 'Dual Audio'),
@@ -81,7 +82,7 @@ class MediaAttachments(models.Model):
     is_video = models.BooleanField()
     video_url = models.URLField(blank=True, null=True)
     added_date = models.DateTimeField(auto_now=True)
-    characters = models.ManyToManyField('Characters', blank=True)
+    characters = models.ManyToManyField('Character', blank=True)
 
     def __str__(self):
         return self.image.name
@@ -115,16 +116,49 @@ class InsightDetails(models.Model):
         verbose_name_plural = "Insight Details"
 
 
-class Characters(models.Model):
+class Character(models.Model):
     name = models.CharField(max_length=50)
     image = models.ImageField()
+    background_image = models.ImageField(blank=True, null=True)
     role = models.CharField(max_length=50, default='')
+    description = models.TextField(default=DEFAULT_DESCRIPTION)
+    detailed_description = RichTextUploadingField(default=DEFAULT_DESCRIPTION)
+    date_of_birth = models.DateField()
+    height = models.FloatField()
+    spouse_character = models.ForeignKey('self', related_name='spouse', on_delete=models.SET_NULL, blank=True,
+                                         null=True)
+    father_character = models.ForeignKey('self', related_name='father', on_delete=models.SET_NULL, blank=True,
+                                         null=True)
+    mother_character = models.ForeignKey('self', related_name='mother', on_delete=models.SET_NULL, blank=True,
+                                         null=True)
+    part_of_animes = models.ManyToManyField('Item', related_name="animes_related", blank=True)
+    part_of_movies = models.ManyToManyField('MovieItem', related_name="movies_related", blank=True)
+    slug = models.SlugField()
 
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse("core:character-details", kwargs={
+            'slug': self.slug
+        })
+
+    def get_part_of(self):
+        return list(chain(self.part_of_animes.all(), self.part_of_movies.all()))
+
     class Meta:
         verbose_name_plural = 'Characters'
+
+
+class CharacterSet(models.Model):
+    title = models.CharField(max_length=100)
+    characters = models.ManyToManyField(Character, blank=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = "CharacterSets"
 
 
 class Item(models.Model):
@@ -144,7 +178,7 @@ class Item(models.Model):
     year_released = models.IntegerField(choices=year_choices(), default=current_year() - 4)
     media = models.ManyToManyField(MediaAttachments, blank=True)
     insights = models.ForeignKey(InsightDetails, blank=True, on_delete=models.CASCADE)
-    characters = models.ManyToManyField(Characters, blank=True)
+    character_set = models.ForeignKey(CharacterSet, blank=True, null=True, on_delete=models.SET_NULL)
     language = models.CharField(choices=AUDIO_CHOICES, max_length=30, default='Subbed')
 
     def __str__(self):
@@ -183,7 +217,7 @@ class MovieItem(models.Model):
     year_released = models.IntegerField(choices=year_choices(), default=current_year() - 4)
     media = models.ManyToManyField(MediaAttachments, blank=True)
     insights = models.ForeignKey(InsightDetails, blank=True, on_delete=models.CASCADE)
-    characters = models.ManyToManyField(Characters, blank=True)
+    character_set = models.ForeignKey(CharacterSet, blank=True, null=True, on_delete=models.SET_NULL)
     language = models.CharField(choices=AUDIO_CHOICES, max_length=30, default='Subbed')
 
     def __str__(self):
@@ -193,7 +227,7 @@ class MovieItem(models.Model):
         verbose_name_plural = 'Movies'
 
     def get_absolute_url(self):
-        return reverse("core:anime", kwargs={
+        return reverse("core:movie", kwargs={
             'pk': self.id
         })
 
