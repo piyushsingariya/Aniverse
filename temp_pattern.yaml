@@ -1,36 +1,13 @@
-name: IstioSM
-version: 1.0.1
+name: ApplicationPattern
 services:
-  istio:
-    type: IstioMesh
-    namespace: istio-system
+  app:
+    type: Application
+    namespace: test
     settings:
-      version: 1.9.1
-    traits:
-      mTLS:
-        policy: mutual
-        namespaces:
-          - istio-test
-      automaticSidecarInjection:
-        namespaces:
-          - default
-          - istio-test
-​
-  grafana:
-    type: GrafanaIstioAddon
-    namespace: istio-system
-    dependsOn:
-      - istio
-      - prometheus
-​
-  prometheus:
-    type: PrometheusIstioAddon
-    namespace: istio-system
-    dependsOn:
-      - istio
-      
-  prometheus2:
-    type: PrometheusIstioAddon
-    namespace: istio-system
-    dependsOn:
-      - istio
+      replicas: 1
+      containers:
+        - name: svc-demo
+          image: utkarsh23/meshy:v5
+          ports:
+            - name: http
+              containerPort: 8080
